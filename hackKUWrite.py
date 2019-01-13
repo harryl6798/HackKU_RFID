@@ -1,3 +1,6 @@
+#Written by Harrison Luo for HackKU purposes
+#Adapted from the MonkMakes Tutorial
+
 from guizero import *
 import RPi.GPIO as GPIO
 import SimpleMFRC522
@@ -13,6 +16,9 @@ def read_tag():
         values = text.split(",")
         allergies = ""
         if len(values) == 8:
+            
+            #Will print the values according to the card given
+            
             if values[1] == "1":
                 allergies += "Vegetarian, "
             if values[2] == "1":
@@ -32,8 +38,8 @@ def read_tag():
             display_text2.set("Allergies: " + allergies)
 
                 
-        
 def write_tag():
+    # Gets the fields and will write to the RFID Card
     name = name_field.get()
     vege = str(vegetarian_field.value)
     vegan = str(vegan_field.value)
@@ -58,7 +64,10 @@ def write_tag():
     if peanut == "1":
         peanut_field.toggle()
     other_field.set("")
-        
+
+
+#------------------------------------------------------------------------------
+    # || App Design and Fields ||
 PushButton(app, text="Read the Card", command=read_tag, align="left", grid=[0,0])
 name_text = Text(app, text = "Name", align = "right", grid = [0,1])
 name_field = TextBox(app, text="", align="left", width=20, grid=[1,1])
@@ -75,4 +84,6 @@ display_text2 = Text(app, text = "Allergies: ", size=12, font="Courier New", col
 
 PushButton(app, text="Write to Card", command=write_tag, align="left", grid=[1,0])
 
+#-------------------------------------------------------------------------------
+    #|| App Display ||
 app.display()
